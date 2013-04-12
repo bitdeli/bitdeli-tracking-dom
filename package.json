@@ -1,0 +1,10 @@
+{
+    "name": "dom-tracker",
+    "version": "0.0.1",
+    "dependencies": {
+        "domready": "0.2.11",
+        "bitdeli-tracking-js": "git://github.com/bitdeli/bitdeli-tracking-js.git#bd3"
+    },
+    "main": "./src/main.js",
+    "private": true
+}
