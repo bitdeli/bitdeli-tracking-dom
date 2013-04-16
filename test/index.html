@@ -14,10 +14,26 @@
     <li><a href="?1" class="outbound-link">Outbound link 1</a></li>
     <li><a href="?2" class="outbound-link">Outbound link 2</a></li>
     <li><a href="?3" class="outbound-link">Outbound link 3</a></li>
+    <li><a href="?4" class="outbound-link" data-bd-ignore>Ignored outbound link</a></li>
+    <li><a href="#" data-bd-ignore>Ignored local link</a></li>
 </ul>
 
 <form id="test-form">
-    <button type="submit">Submit form</button>
+    <p>
+        <label>
+            Input field: track change, do not track keyup
+            <input type="text">
+        </label>
+    </p>
+    <p>
+        <label>
+            Password field: Don't track
+            <input type="password">
+        </label>
+    </p>
+    <p>
+        <button type="submit">Submit form</button>
+    </p>
 </form>
 
 </body>
