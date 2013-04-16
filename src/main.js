@@ -8,7 +8,8 @@ var _       = require("underscore"),
 
 // Constants
 // ---------
-var GLOBAL_VAR          = "_bd_dom",
+var LIB_VERSION         = "0.1.0",
+    GLOBAL_VAR          = "_bd_dom",
     BD_QUEUE            = "_bdq",
     BD_EVENT_NAME       = "$dom_event",
     BD_TRACK_METHOD     = "trackRaw",
@@ -40,6 +41,7 @@ var DomTracker = {};
 
 // Event queue and request manager
 DomTracker.Queue = function(options) {
+    this._version = LIB_VERSION;
     this.options = opts = options || {};
     this.queue = opts.queue || [];
     this.triggered = opts.triggered || {};

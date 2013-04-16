@@ -1,6 +1,6 @@
 {
     "name": "dom-tracker",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "dependencies": {
         "domready": "0.2.11",
         "underscore": "1.4.4",
