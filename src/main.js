@@ -25,7 +25,7 @@ var GLOBAL_VAR          = "_bd_dom",
     // Track every occurrence of these events
     QUEUE_EVENTS        = ["click", "keyup", "change", "focus", "submit"],
     // High frequency events (track once per heartbeat)
-    TRIGGER_EVENTS      = ["mousemove", "mouseover", "resize", "scroll"],
+    TRIGGER_EVENTS      = ["scroll"],
     // Event sanitization
     MAX_TEXT_LENGTH     = 128,
     MAX_PROP_LENGTH     = 1024,
