@@ -240,7 +240,7 @@ $.domReady(function() {
 
     // Track all specified DOM events
     var events = QUEUE_EVENTS.concat(TRIGGER_EVENTS);
-    bean.on(context, events.join(" "), function(domEvent) {
+    bean.on(document, events.join(" "), function(domEvent) {
         var event = new DomTracker.Event(domEvent);
         domTracker.addEvent(event);
     });
