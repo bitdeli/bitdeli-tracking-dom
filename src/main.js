@@ -67,6 +67,17 @@ _.extend(DomTracker.Queue.prototype, {
         this._flush();
     },
 
+    unload: function() {
+        var now;
+        this._flush();
+        if (this._resumeUnload) {
+            // Wait for the last request to be sent
+            do {
+                now = new Date();
+            } while (now.realGetTime() < this._resumeUnload);
+        }
+    },
+
     _heartbeat: function() {
         if (!this.isActive) return;
         this._flush();
@@ -78,19 +89,27 @@ _.extend(DomTracker.Queue.prototype, {
     },
 
     _flush: function() {
-        var data = [];
+        var data = [],
+            that = this;
         _(this.queue).each(function(event) {
             if (!event || !event.isTrackable()) return;
             data.push(this._getTrackingData(event));
-            if (this.debug) console.log("queued", event.type, this._getTrackingData(event));
+            if (this.debug) console.log("DOM tracker queued", event.type, this._getTrackingData(event));
         }, this);
         _(this.triggered).each(function(event, type) {
             if (!event || !event.isTrackable()) return;
             data.push(this._getTrackingData(event));
-            if (this.debug) console.log("triggered", event.type, this._getTrackingData(event));
+            if (this.debug) console.log("DOM tracker triggered", event.type, this._getTrackingData(event));
         }, this);
         if (!_.isEmpty(data)) {
-            context[BD_QUEUE].push([BD_TRACK_METHOD, data]);
+            this._resumeUnload = (new Date()).realGetTime() + UNLOAD_TIMEOUT;
+            context[BD_QUEUE].push([BD_TRACK_METHOD, data, function(resp) {
+                if (that.debug) {
+                    var success = resp === 1 || resp.status == "ok";
+                    console.log("DOM tracker", success ? "success" : "error", resp);
+                }
+                that._resumeUnload = 0;
+            }]);
         }
         this._reset();
     },
@@ -207,6 +226,10 @@ DomTracker.utils = {
 };
 
 
+// Store reference to getTime for unload handling
+Date.prototype.realGetTime = Date.prototype.getTime;
+
+
 // Initialize and activate library after DOM is loaded
 $.domReady(function() {
     // Only allow one instance at a time
@@ -218,6 +241,11 @@ $.domReady(function() {
     bean.on(context, events.join(" "), function(domEvent) {
         var event = new DomTracker.Event(domEvent);
         domTracker.addEvent(event);
+    });
+
+    // Flush event queue before unloading page
+    bean.on(context, "beforeunload", function() {
+        domTracker.unload();
     });
 
     // Start the heartbeat
