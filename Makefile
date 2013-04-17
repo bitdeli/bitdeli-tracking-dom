@@ -1,6 +1,6 @@
 VERSION = 0.1.0
 BUILD_DIR = ./build
-OUTPUT = ${BUILD_DIR}/dom-tracker-${VERSION}
+OUTPUT = ${BUILD_DIR}/bitdeli-dom-${VERSION}
 
 all: build compile
 
