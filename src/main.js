@@ -8,7 +8,7 @@ var _       = require("underscore"),
 
 // Constants
 // ---------
-var LIB_VERSION         = "0.1.0",
+var LIB_VERSION         = "0.2.0",
     GLOBAL_VAR          = "_bd_dom",
     BD_QUEUE            = "_bdq",
     BD_EVENT_NAME       = "$dom_event",
