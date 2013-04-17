@@ -5,7 +5,7 @@
         "domready": "0.2.11",
         "underscore": "1.4.4",
         "bean": "1.0.3",
-        "bitdeli-tracking-js": "git://github.com/bitdeli/bitdeli-tracking-js.git#bd3"
+        "bitdeli-tracking-js": "git://github.com/bitdeli/bitdeli-tracking-js.git#v0.9.2-bd3"
     },
     "main": "./src/main.js",
     "private": true
