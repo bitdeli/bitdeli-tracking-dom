@@ -1,6 +1,12 @@
 {
-    "name": "dom-tracker",
+    "name": "bitdeli-tracking-dom",
     "version": "0.1.0",
+    "author": "Bitdeli Inc. <support@bitdeli.com>",
+    "description": "JavaScript tracking library for Bitdeli with automatic DOM event tracking",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bitdeli/bitdeli-tracking-dom.git"
+    },
     "dependencies": {
         "domready": "0.2.11",
         "underscore": "1.4.4",
