@@ -26,6 +26,8 @@ var LIB_VERSION         = "0.2.0",
     P_PAGE_URL          = "page_url",
     P_SCROLL_TOP        = "scroll_top",
     P_SCROLL_LEFT       = "scroll_left",
+    P_PAGE_X            = "page_x",
+    P_PAGE_Y            = "page_y",
     // Track every occurrence of these events
     QUEUE_EVENTS        = ["click", "keyup", "change", "focus", "submit"],
     // High frequency events (track once per heartbeat)
@@ -174,7 +176,7 @@ _.extend(DomTracker.Event.prototype, {
 
     parse: function() {
         var props = {},
-            domEvent = this._event,
+            domEvent = this._normalize(this._event),
             el = this.el;
 
         // Target element properties
@@ -192,6 +194,8 @@ _.extend(DomTracker.Event.prototype, {
         // Event properties
         props[P_EVENT_TYPE] = domEvent.type;
         props[P_WHICH] = domEvent.which || domEvent.button || domEvent.keyCode;
+        props[P_PAGE_X] = domEvent.pageX;
+        props[P_PAGE_Y] = domEvent.pageY;
 
         // Page metadata
         props[P_PAGE_URL] = context.location.href;
@@ -225,6 +229,18 @@ _.extend(DomTracker.Event.prototype, {
                 break;
         }
         return val;
+    },
+
+    _normalize: function(event) {
+        // Calculate pageX/Y if missing and clientX/Y available (from jQuery)
+        if (!event.pageX && _.isFinite(event.clientX)) {
+            var eventDoc = event.target.ownerDocument || document,
+                doc = eventDoc.documentElement,
+                body = eventDoc.body;
+            event.pageX = event.clientX + ( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) - ( doc && doc.clientLeft || body && body.clientLeft || 0 );
+            event.pageY = event.clientY + ( doc && doc.scrollTop  || body && body.scrollTop  || 0 ) - ( doc && doc.clientTop  || body && body.clientTop  || 0 );
+        }
+        return event;
     }
 
 });
