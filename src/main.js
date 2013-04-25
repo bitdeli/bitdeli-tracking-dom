@@ -24,6 +24,8 @@ var LIB_VERSION         = "0.2.0",
     P_WHICH             = "which",
     P_INNER_TEXT        = "inner_text",
     P_PAGE_URL          = "page_url",
+    P_SCROLL_TOP        = "scroll_top",
+    P_SCROLL_LEFT       = "scroll_left",
     // Track every occurrence of these events
     QUEUE_EVENTS        = ["click", "keyup", "change", "focus", "submit"],
     // High frequency events (track once per heartbeat)
@@ -193,6 +195,14 @@ _.extend(DomTracker.Event.prototype, {
 
         // Page metadata
         props[P_PAGE_URL] = context.location.href;
+
+        // Type specific properties
+        if (domEvent.type == "scroll") {
+            // Get scroll from body if scrolling document
+            var scrollEl = el.nodeType == 9 ? document.body : el;
+            props[P_SCROLL_TOP] = scrollEl.scrollTop;
+            props[P_SCROLL_LEFT] = scrollEl.scrollLeft;
+        }
 
         return props;
     },
