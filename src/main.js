@@ -23,6 +23,7 @@ var LIB_VERSION         = "0.2.0",
     P_EVENT_TYPE        = "type",
     P_WHICH             = "which",
     P_INNER_TEXT        = "inner_text",
+    P_PAGE_URL          = "page_url",
     // Track every occurrence of these events
     QUEUE_EVENTS        = ["click", "keyup", "change", "focus", "submit"],
     // High frequency events (track once per heartbeat)
@@ -189,6 +190,9 @@ _.extend(DomTracker.Event.prototype, {
         // Event properties
         props[P_EVENT_TYPE] = domEvent.type;
         props[P_WHICH] = domEvent.which || domEvent.button || domEvent.keyCode;
+
+        // Page metadata
+        props[P_PAGE_URL] = context.location.href;
 
         return props;
     },
